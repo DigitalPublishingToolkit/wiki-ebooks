@@ -1,0 +1,6 @@
+#parameters{width: 30%; float: left;}
+#result{ width: 68%;float: left;}
+button {display: block; margin: 2em 0;}
+select{width: 90%;}
+
+#w-parse-prop, #w-query-prop{display: none;}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <title>Prototype wiki-to-ebook</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <link href="assets/css/style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h2>Wiki API</h2>
+        <div id="parameters">
+          <h3>Project</h3>
+          <p>Define the Wiki Project.</p>
+          <input type="text" id="w-proj" placeholder="http://en.wikipedia.org">
+          <h3>Page Title</h3>
+          <p>Type the page title (exactly as it appears in the page)</p>
+          <input type="text" id="w-page" placeholder="The page title (Etherpad)">
+          <h3>Action</h3>
+          <p>Choose the action you'd like the query to perform.</p>
+          <select id="w-action">
+           <option value="parse">parse</option>
+           <option value="query">query</option>
+           <!-- Different query actions demand different parameters to be sent along with the query. This script is optimized for the parse action. -->
+          </select>
+          <h3>Properties</h3>
+          <p>Choose which properties you'd like to include.</p>
+          <!-- the values displayed here should match the w-action selected above -->
+          <select id="w-prop" multiple>
+            <option value="text">Text</option>
+            <option value="langlinks">Language Links</option>
+            <option value="categories">Categories</option>
+            <option value="categorieshtml">Categories in html version</option>
+            <option value="links">Links</option>
+            <option value="templates">Templates</option>
+            <option value="externallinks">External links</option>
+            <option value="sections">Sections</option>
+            <option value="revid">Revidion ID</option>
+            <option value="displaytitle">Title of parsed wiki text</option>
+            <option value="iwlinks">Interwiki links</option>
+          </select>
+          <!-- retrieved from https://en.wikipedia.org/w/api.php?action=help&modules=parse -->
+          <select id="w-parse-prop" multiple>
+            <option value="text">Text</option>
+            <option value="langlinks">Language Links</option>
+            <option value="categories">Categories</option>
+            <option value="categorieshtml">Categories in html version</option>
+            <option value="links">Links</option>
+            <option value="templates">Templates</option>
+            <option value="externallinks">External links</option>
+            <option value="sections">Sections</option>
+            <option value="revid">Revision ID</option>
+            <option value="displaytitle">Title of parsed wiki text</option>
+            <option value="iwlinks">Interwiki links</option>
+          </select>
+          <select id="w-query-prop" multiple>
+            <option value="images">Images</option>
+            <option value="contributors">Contributors</option>
+            <option value="references">References</option>
+          </select>
+          <button id="query">Send Query</button>
+        </div>
+        <div id="result">
+        <h3>Result</h3>
+        <p id="string"></p>
+        <p id="page">Result will be displayed here.</p>
+        </div>
+        <script src="assets/js/grabcontent.js" ></script>
+    </body>
+</html>
