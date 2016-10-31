@@ -79,7 +79,7 @@ $(document).ready(function(){
       $.getJSON(wikiUrl, function(data) {
 
               //request complete, do something with the data
-              $("#page").html(JSON.stringify(data));
+              $("#page").html(JSON.stringify(data,undefined,2));
 
               //add the contentQuery to the data object (can be useful in the EDIT page)
               data[Object.keys(data)[0]]["identifier"] = contentQuery;

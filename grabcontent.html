@@ -11,10 +11,10 @@
         <div id="parameters">
           <h3>Project</h3>
           <p>Define the Wiki Project.</p>
-          <input type="text" id="w-proj" placeholder="http://en.wikipedia.org">
+          <input type="text" id="w-proj" placeholder="http://en.wikipedia.org" value="http://en.wikipedia.org">
           <h3>Page Title</h3>
           <p>Type the page title (exactly as it appears in the page)</p>
-          <input type="text" id="w-page" placeholder="The page title (Etherpad)">
+          <input type="text" id="w-page" placeholder="The page title (Etherpad)" value="Etherpad">
           <h3>Action</h3>
           <p>Choose the action you'd like the query to perform.</p>
           <select id="w-action">
@@ -62,7 +62,7 @@
         <div id="result">
         <h3>Result</h3>
         <p id="string"></p>
-        <p id="page">Result will be displayed here.</p>
+        <pre id="page">Result will be displayed here.</pre>
         </div>
         <script src="assets/js/grabcontent.js" ></script>
     </body>
