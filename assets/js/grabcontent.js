@@ -78,8 +78,34 @@ $(document).ready(function(){
       // fadeOut complete, request data
       $.getJSON(wikiUrl, function(data) {
 
+
               //request complete, do something with the data
-              $("#page").html(JSON.stringify(data,undefined,2));
+              //$("#page").html(JSON.stringify(data,undefined,2));
+              //JSON to HTML
+              $("#interpretation").html(JSON.stringify(data,undefined,2));
+//var jjj = data
+//obj = JSON.parse(jjj);
+
+//alert(obj.url);}
+
+
+
+              //var validation_messages = data;
+
+              for (var key in data) {
+                  // skip loop if the property is from prototype
+                  if (!data.hasOwnProperty(key)) continue;
+
+                  var obj = data[key];
+                  for (var prop in obj) {
+                      // skip loop if the property is from prototype
+                      if(!obj.hasOwnProperty(prop)) continue;
+
+                      // your code
+                      alert(prop + " = " + obj[prop]);
+                  }
+              }
+
 
               //add the contentQuery to the data object (can be useful in the EDIT page)
               data[Object.keys(data)[0]]["identifier"] = contentQuery;
@@ -87,7 +113,9 @@ $(document).ready(function(){
               //for further info, please check:
               // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects
 
-               if( containsObject(contentQuery, titleModules) ){
+               if( containsObject(contentQuery, titleModules) )
+
+          {
                 //true
                 alert('Content previously selected - will not be saved.')
               }else{
