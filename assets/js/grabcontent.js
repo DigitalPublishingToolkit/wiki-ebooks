@@ -83,11 +83,11 @@ $(document).ready(function(){
               //$("#page").html(JSON.stringify(data,undefined,2));
               //JSON to HTML
               $("#page").html(JSON.stringify(data,undefined,2));
-//get an especific object within an object ( in this case change the key you want EX: lang,pageid,url,etc)
+
+//get an especific object within an object ( in this case change the key you want EX: lang,pageid,url,)
               var result = [];
 getNames(data, "lang");
-document.write("result: " + result.join(", "));
-
+document.getElementById("interpretation").innerHTML = ("result: " + result.join(", "));
 function getNames(obj, lang) {
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
@@ -95,7 +95,9 @@ function getNames(obj, lang) {
                 getNames(obj[key], lang);
             } else if (key == lang) {
 
-                $("#interpretation").html(result.push(obj[key]));
+              result.push(obj[key]);
+
+
             }
         }
     }
