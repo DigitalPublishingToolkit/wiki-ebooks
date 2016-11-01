@@ -86,14 +86,14 @@ $(document).ready(function(){
 
 //get an especific object within an object ( in this case change the key you want EX: lang,pageid,url,)
               var result = [];
-getNames(data, "lang");
-document.getElementById("interpretation").innerHTML = ("result: " + result.join(", "));
-function getNames(obj, lang) {
+getNames(data, "url");
+document.getElementById("interpretation").innerHTML = ("result: " + result.join(", "+("<br>")));
+function getNames(obj, url) {
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
             if ("object" == typeof(obj[key])) {
-                getNames(obj[key], lang);
-            } else if (key == lang) {
+                getNames(obj[key],url);
+            } else if (key == url) {
 
               result.push(obj[key]);
 

@@ -1,6 +1,8 @@
 #parameters{width: 30%; float: left;}
-#result{ width: 68%;float: left;}
+#result{ width: 68%;float: left;font-family:sans-serif;}
 button {display: block; margin: 2em 0;}
 select{width: 90%;}
+body {font-family:sans-serif;}
+
 
 #w-parse-prop, #w-query-prop{display: none;}
