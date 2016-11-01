@@ -82,7 +82,24 @@ $(document).ready(function(){
               //request complete, do something with the data
               //$("#page").html(JSON.stringify(data,undefined,2));
               //JSON to HTML
-              $("#interpretation").html(JSON.stringify(data,undefined,2));
+              $("#page").html(JSON.stringify(data,undefined,2));
+//get an especific object within an object ( in this case change the key you want EX: lang,pageid,url,etc)
+              var result = [];
+getNames(data, "lang");
+document.write("result: " + result.join(", "));
+
+function getNames(obj, lang) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if ("object" == typeof(obj[key])) {
+                getNames(obj[key], lang);
+            } else if (key == lang) {
+
+                $("#interpretation").html(result.push(obj[key]));
+            }
+        }
+    }
+}
 //var jjj = data
 //obj = JSON.parse(jjj);
 
@@ -92,7 +109,7 @@ $(document).ready(function(){
 
               //var validation_messages = data;
 
-              for (var key in data) {
+            /*  for (var key in data) {
                   // skip loop if the property is from prototype
                   if (!data.hasOwnProperty(key)) continue;
 
@@ -105,7 +122,7 @@ $(document).ready(function(){
                       alert(prop + " = " + obj[prop]);
                   }
               }
-
+*/
 
               //add the contentQuery to the data object (can be useful in the EDIT page)
               data[Object.keys(data)[0]]["identifier"] = contentQuery;
