@@ -84,47 +84,87 @@ $(document).ready(function(){
               //JSON to HTML
               $("#page").html(JSON.stringify(data,undefined,2));
 
-//get an especific object within an object ( in this case change the key you want EX: lang,pageid,url,)
+              //get an especific object within an object ( in this case change the key you want EX: lang,pageid,url,)
               var result = [];
-getNames(data, "url");
-document.getElementById("interpretation").innerHTML = ("result: " + result.join(", "+("<br>")));
-function getNames(obj, url) {
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            if ("object" == typeof(obj[key])) {
-                getNames(obj[key],url);
-            } else if (key == url) {
+              console.log(data);
+              for(var d in data){
+                getNames(data);
+                console.log(d);
+                console.log(data[d]);
+                if ("object" == typeof(data[d])) {
+                  result.push(data[d]);
+                }
+              }
 
-              result.push(obj[key]);
 
-
-            }
-        }
-    }
-}
-//var jjj = data
-//obj = JSON.parse(jjj);
-
-//alert(obj.url);}
-
+              document.getElementById("interpretation").innerHTML = ("<h2 style='color: red;'>Result:</h2>" + result.join(", "+("<br>")));
+              // function getNames(obj, url) {
+              //     for (var key in obj) {
+              //         if (obj.hasOwnProperty(key)) {
+              //             if ("object" == typeof(obj[key])) {
+              //                 getNames(obj[key],url);
+              //             } else if (key == url) {
+              //
+              //               result.push(obj[key]);
+              //
+              //
+              //             }
+              //         }
+              //     }
+              // }
+              function getNames(obj) {
+                  for (var key in obj) {
+                      if (obj.hasOwnProperty(key)) {
+                          if ("object" == typeof(obj[key])) {
+                              getNames(obj[key]);
+                              result.push(obj[key]);
+                          } else {
+                            result.push(obj[key]);
+                          }
+                      }
+                  }
+              }
 
 
               //var validation_messages = data;
 
-            /*  for (var key in data) {
-                  // skip loop if the property is from prototype
-                  if (!data.hasOwnProperty(key)) continue;
+            //  for (var key in data) {
+            //       // skip loop if the property is from prototype
+            //       if (!data.hasOwnProperty(key)) continue;
+             //
+            //       var obj = data[key];
+            //       for (var prop in obj) {
+            //           // skip loop if the property is from prototype
+            //           if(!obj.hasOwnProperty(prop)) continue;
+             //
+            //           // your code
+            //           console.log("pushing " +prop + " = " + obj[prop] + " to result.");
+            //           result.push([prop, obj[prop]]);
+            //       }
+            //   }
+            //   console.log(result);
 
-                  var obj = data[key];
-                  for (var prop in obj) {
-                      // skip loop if the property is from prototype
-                      if(!obj.hasOwnProperty(prop)) continue;
+              //another loop, now through the new array result
+              // var outputResult;
+              // for(var r=0; r<result.length; r++){
+              //   if(result[r][1] == '[object Object]'){
+              //     alert(r);
+              //     var myObj = result[r][1];
+              //     for (var myProp in myObj) {
+              //         if(!myObj.hasOwnProperty(myProp)) continue;
+              //
+              //         console.log("myObj " +myProp + " = " + myObj[myProp] );
+              //         outputResult += myProp + ': ' + myObj[myProp]+'<br>';
+              //     }
+              //   }
+              //   console.log('r is ' + r);
+              //   console.log('item in result array ' +result[r]);
+              //   console.log('item 1 of ' + r + result[r][0]);
+              //   console.log('item 2 of ' + r + result[r][1]);
+              //   outputResult += result[r][0]+':'+result[r][1]+'<br>';
+              // }
+              // document.getElementById("interpretation").innerHTML = '<h2>RESULTS</h2><p>'+outputResult+'</p>';
 
-                      // your code
-                      alert(prop + " = " + obj[prop]);
-                  }
-              }
-*/
 
               //add the contentQuery to the data object (can be useful in the EDIT page)
               data[Object.keys(data)[0]]["identifier"] = contentQuery;
