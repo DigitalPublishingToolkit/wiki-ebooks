@@ -81,9 +81,10 @@ $( "input[type='text']" ).on("change keyup input paste", function(){
     //if all is in place, display buttons
     if(reqProject != undefined && reqPage != undefined){
       if(reqProject != '' && reqPage != ''){
-        //console.log('btns');
         //display buttons
         $('#btns button').css('display', 'inline-block');
+      }else{
+        $('#btns button').css('display', 'none');
       }
 
     }
