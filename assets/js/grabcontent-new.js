@@ -19,32 +19,74 @@ for(var p=0; p < $('#wikiProjects').children().length; p++){
   }
 }
 
+function extractDomain(url) {
+    var domain;
+    var page;
+    var proj;
+
+    //find & remove protocol (http, ftp, etc.) and get domain
+    if (url.indexOf("://") > -1) {
+        domain = url.split('/')[2];
+        page = url.split('/')[4];
+        proj = domain.split('.')[1];
+        //console.log('proj ' +proj);
+    }
+    else {
+        domain = url.split('/')[0];
+        page = url.split('/')[2];
+        proj = domain.split('.')[1];
+        //console.log('proj ' +proj);
+    }
+
+    //find & remove port number
+    domain = domain.split(':')[0];
+    //console.log(domain, page);
+    return [domain, page, proj];
+
+}
+
+// var p1 = extractDomain('https://en.wikipedia.org/wiki/Etherpad');
+// var p2 = extractDomain('en.wikipedia.org/wiki/Etherpad');
+// var p3 = extractDomain('www.uol.com.br');
+// console.log(p1[0], p1[1]);
+// console.log(p2[0], p2[1]);
+// console.log(p3[0], p3[1]);
+
 //.later btns will be visible only after query is back
 
 $( "input[type='text']" ).on("change keyup input paste", function(){
 
-    var val = $(this).val();
-    var proj = $('#wikiProjects option').filter(function() {
-      return this.value == val;
-    }).data('project');
-    var project;
-   //check string agains projects inside the projects array
-   for(var s=0; s < projects.length; s++){
-    //  if ($(this).val() == projects[s]){
-    if (proj == projects[s]){
+  var url = $(this).val();
+  var req = extractDomain(url);
+  var reqProject, reqPage;
+
+  for(var s=0; s < projects.length; s++){
+    //console.log(s);
+    //console.log(projects[s]);
+    //console.log('req ' + req[2]);
+    if (req[2] == projects[s]){
        //console.log(projects[s]);
-       project = projects[s];
+       reqProject = projects[s];
+       reqPage = req[1];
        break;
      }
    }
-    //console.log($(this).val());
-    //console.log($(this).data('project'));
-    console.log(project);
+
+    console.log('here ' +reqProject, reqPage);
     //remove all modules
     $('.module').css('display','none');
     //display relevant modules only
-    $('.'+project).css('display','inline-block');
-    //display modules
+    $('.'+reqProject).css('display','inline-block');
+
+    //if all is in place, display buttons
+    if(reqProject != undefined && reqPage != undefined){
+      if(reqProject != '' && reqPage != ''){
+        //console.log('btns');
+        //display buttons
+        $('#btns button').css('display', 'inline-block');
+      }
+
+    }
 });
 
   var wikiAction,

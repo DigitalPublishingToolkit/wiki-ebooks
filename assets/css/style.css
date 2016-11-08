@@ -10,6 +10,7 @@ body {font-family:sans-serif;}
 /* new */
 #main{display: flex; margin-bottom: 1em;}
 #main span{
+  text-transform: uppercase;
   display: inline-block;
   /*height: 30px;*/
   width: 33.3%;
@@ -17,6 +18,12 @@ body {font-family:sans-serif;}
   color: #fff;
   padding: 1.5em;
   border-right: 1px solid #fff;
+}
+#main span.current{
+  color: #00ff00;
+}
+#main span.previous{
+  color: lightgreen;
 }
 
 #parameters{

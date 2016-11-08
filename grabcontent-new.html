@@ -10,7 +10,7 @@
     </head>
     <body>
       <nav id="main">
-        <span id="grabcontent">1.Add Content</span>
+        <span id="grabcontent" class="current">1.Add Content</span>
         <span id="editcontent">2.Edit Content</span>
         <span id="generatefile">3.Generate File</span>
       </nav>
@@ -30,7 +30,7 @@
             <option value="https://nl.wikipedia.org/wiki/" data-project="wikipedia">
             <option value="https://pt.wikipedia.org/wiki/" data-project="wikipedia">
             <!-- wikicommons -->
-            <option value="https://commons.wikimedia.org/wiki/"  data-project="wikicommons">
+            <option value="https://commons.wikimedia.org/wiki/"  data-project="wikimedia">
             <!-- wiki voyage -->
             <option value="https://de.wikivoyage.org/wiki/"  data-project="wikivoyage">
             <option value="https://en.wikivoyage.org/wiki/"  data-project="wikivoyage">
@@ -54,8 +54,8 @@
         </div>
         <div id="modules">
           <div class="module wikipedia wikidata wikiquote wiktionary wikivoyage wikibooks" id="fullPage" data-info="Retrieves the Full Content">Full page<!--<span class="info"></span>--></div>
-          <div class="module wikipedia wikicommons wikispecies wikibooks" id="imageDetails" data-info="Retrieves the Image Details (needs better description)">Image Details</div>
-          <div class="module wikipedia wikicommons wikispecies wikibooks" id="allImages">All Images</div>
+          <div class="module wikipedia wikimedia wikispecies wikibooks" id="imageDetails" data-info="Retrieves the Image Details (needs better description)">Image Details</div>
+          <div class="module wikipedia wikimedia wikispecies wikibooks" id="allImages">All Images</div>
           <div class="module wikipedia wikivoyage" id="lastRevisions" data-info="Retrieves the latest N revisions">Last Revisions</div>
           <div class="module wikipedia wikidata wikispecies" id="categories" data-info="Retrieves the list of Categories to which this entry belongs">Categories</div>
           <div class="module wikipedia wikidata wikiquote wiktionary wikivoyage wikibooks" id="random" data-info="Retrieves Random Randomness">Random</div>
