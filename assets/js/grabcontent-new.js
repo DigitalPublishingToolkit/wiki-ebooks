@@ -82,9 +82,9 @@ $( "input[type='text']" ).on("change keyup input paste", function(){
     if(reqProject != undefined && reqPage != undefined){
       if(reqProject != '' && reqPage != ''){
         //display buttons
-        $('#btns button').css('display', 'inline-block');
+        $('#makeQuery').css('display', 'inline-block');
       }else{
-        $('#btns button').css('display', 'none');
+        $('#makeQuery').css('display', 'none');
       }
 
     }
