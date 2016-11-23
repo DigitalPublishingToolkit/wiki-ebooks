@@ -5,10 +5,13 @@ select{width: 90%;}
 body {font-family:sans-serif;}
 
 
-#w-parse-prop, #w-query-prop{display: none;}
+/*#w-parse-prop, #w-query-prop{display: none;}*/
 
 /* new */
-#main{display: flex; margin-bottom: 1em;}
+#main{
+  display: flex;
+  margin-bottom: 1em;
+}
 #main span{
   text-transform: uppercase;
   display: inline-block;
@@ -26,7 +29,38 @@ body {font-family:sans-serif;}
   color: lightgreen;
 }
 
+/*#tool, #wikiSrc{ width: 50%; float: left;}
+
+#refUrl{
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: .5em;
+}*/
+
+/*#mechanism{
+  float: left; width: 66.6%;
+}*/
+
+#wikiLinks{
+  text-align: center;
+  font-size: 0.9em;
+  width: 33.3%;
+  height: 100%;
+  min-height: 500px;
+  float: left;
+}
+
+#wikiLinks a{
+  text-decoration: underline;
+  display: block;
+  background-color: #f0f0f0;
+  border-top: 1px solid #fff;
+  padding: 1em 0;
+  /*cursor: pointer;*/
+}
+
 #parameters{
+  /*width: 60%;*/
   text-align: center;
 }
 button{
@@ -38,17 +72,53 @@ button{
   /*margin: 1px;*/
 }
 
-#btns button{
+#makeQuery{
+  float: right;
+  margin-right: 12em;
+  padding: 1.2em;
+  font-size: .8em;
+  background-color: green;
+  cursor: pointer;
   display: none;
 }
 
+#makeQuery:hover{
+  background-color: darkgreen;
+}
+
+#msg{
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 1em;
+  color: #333;
+  text-align: center;
+}
+
+#msg.error{
+  color: red;
+}
+
+#btns button{
+  display: none;
+}
+/*#btns button#makeQuery{
+  display: inline-block;
+}
+
+#btns button[disabled="true"]{
+  background-color: #666;
+  cursor: not-allowed;
+}*/
+
 input[type="text"]{
-  width: 50%;
+  width: 80%;
   font-size: 1.2em;
 }
 input[type="text"]:focus{
   border: 2px solid #000;
 }
+#w-proj{margin-top: 1em;}
 
 /* Modules */
 #modules{
@@ -56,6 +126,9 @@ input[type="text"]:focus{
   flex-wrap:wrap;
   justify-content:  center;
   padding-top: 2em;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 .module{
   display: none;
@@ -65,7 +138,7 @@ input[type="text"]:focus{
   cursor: pointer;
 }
 .module:hover{
-  background-color: #000;
+  background-color: #666;
   color: #fff;
 }
 .module.selected{
@@ -80,7 +153,6 @@ input[type="text"]:focus{
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
-  /* other styles */
   color: green;
   position: absolute;
   top: 2px;
