@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contributions</title>
+  <meta charset="utf-8">
+  <script src="json/jquery-2.1.3.min.js"></script>
+</head>
+<body>
+  <h2 id="myTitleContrib"></h2>
+  <ul id="myContributions">
+  </ul>
+</body>
+<script>
+$(document).ready(function(){
+
+  var proj = "https://en.wikipedia.org";
+  var page = "Etherpad"; //Apache Wave
+
+  //var jsonFile = 'json/contributors.json';
+
+  var jsonFile = proj+"/w/api.php?action=query&titles="+page+"&prop=contributors&format=json&callback=?";
+
+
+    $.getJSON( jsonFile, function(data) {
+      //  console.log( "done and assuming that page exists");
+        var pages = data.query.pages;
+        var myTitle = pages[Object.keys(pages)[0]].title;
+        var contribArray = pages[Object.keys(pages)[0]].contributors;
+
+        //console.log(contribArray.length);
+
+
+        //Contributions
+        $('#myTitleContrib').text('Wikipedia EN ' +myTitle + ' Contributions');
+
+        for(var o = 0; o < contribArray.length; o++){
+            console.log(contribArray[o].name);
+            $('#myContributions').append('<li>'+contribArray[o].name+'</li>');
+
+        }
+
+      });
+
+
+});
+</script>
+</html>

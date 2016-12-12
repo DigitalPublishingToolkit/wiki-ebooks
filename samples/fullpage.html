@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Full Page</title>
+  <meta charset="utf-8">
+  <script src="json/jquery-2.1.3.min.js"></script>
+  <style>
+  #left, #right{ width: 48%; float: left;}
+  #right{margin-left: 4%;}
+  #myFullpage{display: none;}
+  #myFullpageNoLinks{display: none;}
+  </style>
+</head>
+<body>
+  <div id="left">
+    <h2 id="myTitle"></h2>
+    <div id="myFullpage">
+    </div>
+  </div>
+
+  <div id="right">
+    <h2>Without links</h2>
+    <div id="myFullpageNoLinks">
+    </div>
+  </div>
+
+</body>
+<script>
+$(document).ready(function(){
+
+  var proj = "https://en.wikipedia.org";
+  var page = "Etherpad"; //Apache Wave
+
+  //var jsonFile = 'json/fullpage.json';
+
+  var jsonFile = proj+"/w/api.php?action=parse&page="+page+"&prop=text&format=json&callback=?";
+
+
+    $.getJSON( jsonFile, function(data) {
+        //console.log( "done and assuming that page exists");
+
+        console.log(data);
+        var myTitle = data.parse.title;
+        var text = data.parse.text["*"];
+
+
+        //Fullpage
+        $('#myTitle').text('Wikipedia EN ' +myTitle + ' Fullpage');
+        $('#myFullpage').html(text);
+
+        //remove [edit] links
+        $('.mw-editsection').remove();
+        //fix internal links, by adding wiki proj as prefix
+        $('a[href^="/wiki"]').css('color', 'red');
+        $('a[href^="/wiki"]').each(function() {
+           var $this = $(this);
+           var _href = $this.attr("href");
+           $this.attr("href", proj + _href);
+        });
+        //fix img src
+        $('img[src^="//"]').each(function(){
+          var $this = $(this);
+          var _src = $this.attr("src");
+          $this.attr("src", "https:" + _src);
+        });
+
+        $('#myFullpage').css('display','block');
+
+
+        //NO LINKS
+        $('#myFullpageNoLinks').html(text);
+
+        //remove [edit] links
+        $('.mw-editsection').remove();
+        //fix internal links, by adding wiki proj as prefix
+        //$('a[href^="/wiki"]').css('color', 'red');
+        $('a[href^="/wiki"]').each(function() {
+           var $this = $(this);
+           var _href = $this.attr("href");
+           $this.attr("href", proj + _href);
+        });
+        //fix img src
+        $('img[src^="//"]').each(function(){
+          var $this = $(this);
+          var _src = $this.attr("src");
+          $this.attr("src", "https:" + _src);
+        });
+
+        //remove all links to wiki projects, keeping the text (maybe there is a better parameter to use when choosing which links to remove?)
+        //$('a[href*="wiki"]').css('color', 'red');
+        $('#myFullpageNoLinks a[href*="wiki"]').contents().unwrap();
+
+        $('#myFullpageNoLinks').css('display','block');
+      });
+
+
+});
+</script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Images</title>
+  <meta charset="utf-8">
+  <script src="json/jquery-2.1.3.min.js"></script>
+</head>
+<body>
+  <h2 id="myTitle"></h2>
+  <ul id="myImages">
+  </ul>
+</body>
+<script>
+$(document).ready(function(){
+var proj = "https://en.wikipedia.org";
+var page = "Etherpad"; //Apache Wave
+
+//https://commons.wikimedia.org/wiki/Asher_Brown_Durand#/media/File:AsherDurand-Musidora.jpg
+
+//var jsonFile = 'json/images.json';
+var jsonFile = proj+"/w/api.php?action=query&titles="+page+"&prop=images&format=json&callback=?";
+
+
+  $.getJSON( jsonFile, function(data) {
+      //console.log( "done and assuming that page exists");
+      var pages = data.query.pages;
+
+      //console.log(pages);
+      //console.log(pages[Object.keys(pages)[0]].title);
+
+      var myTitle = pages[Object.keys(pages)[0]].title;
+      var imgArray = pages[Object.keys(pages)[0]].images;
+
+      //console.log(imgArray.length);
+
+      $('#myTitle').text('Wikipedia EN ' +myTitle + ' Images');
+
+      for(var o = 0; o < imgArray.length; o++){
+
+
+          //console.log(o + ' not hidden');
+          console.log(imgArray[o]['title']);
+          $('#myImages').append('<li>'+proj+'/wiki/'+imgArray[o]["title"]+'</li>');
+          //to get the file URL, we need another API call, like
+          //https://www.mediawiki.org/w/api.php?action=query&titles=File:Test.jpg&prop=imageinfo&iiprop=url
+
+
+      }
+
+
+    });
+
+
+
+
+});
+</script>
+</html>

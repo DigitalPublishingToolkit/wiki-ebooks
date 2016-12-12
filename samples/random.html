@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Page</title>
+  <meta charset="utf-8">
+  <script src="json/jquery-2.1.3.min.js"></script>
+  <style>
+  #randomContent{width: 100%;}
+  #randomLeft, #randomRight{width: 48%; float: left; display: none;}
+  #randomRight{margin-left: 4%;}
+  </style>
+</head>
+<body>
+  <h2 id="myTitle"></h2>
+  <p id="myRandomPage"></p>
+  <button>Get Full Page</button>
+  <h2 id="myRTitle"></h2>
+  <div id="randomContent">
+    <div id="randomLeft"></div>
+    <div id="randomRight"></div>
+  </div>
+</body>
+<script>
+$(document).ready(function(){
+var proj = "https://en.wikipedia.org";
+
+//var jsonFile = 'json/random.json';
+
+var jsonFile = proj+"/w/api.php?action=query&list=random&rnnamespace=0&rnlimit=1&format=json&callback=?";
+
+  console.log(jsonFile);
+
+  $.getJSON( jsonFile, function(data) {
+      //console.log( "done and assuming that page exists");
+      var rn = data.query.random;
+
+      console.log(rn[Object.keys(rn)[0]].title);
+
+      var myTitle = rn[Object.keys(rn)[0]].title;
+      var myPage = proj+'/wiki/'+myTitle;
+
+      //console.log(linksArray.length);
+
+      $('#myTitle').text('Wikipedia EN ' +myTitle + ' (Random Page)');
+      $('#myRandomPage').html('<a href="'+myPage+'">'+myPage+'</a>');
+
+      //btn, call api again, get FullPage from random page
+      $('button').on('click', function(){
+        var getText = proj+"/w/api.php?action=parse&page="+myTitle+"&prop=text&format=json&callback=?";
+
+        $.getJSON( getText, function(rData) {
+            console.log(rData);
+            var myRTitle = rData.parse.title;
+            var rText = rData.parse.text["*"];
+
+
+            //Fullpage
+            $('#myRTitle').text('Wikipedia EN ' +myRTitle + ' Fullpage');
+            $('#randomLeft').html(rText);
+
+            //remove [edit] links
+            $('.mw-editsection').remove();
+            //fix internal links, by adding wiki proj as prefix
+            $('a[href^="/wiki"]').css('color', 'red');
+            $('a[href^="/wiki"]').each(function() {
+               var $this = $(this);
+               var _href = $this.attr("href");
+               $this.attr("href", proj + _href);
+            });
+            //fix img src
+            $('img[src^="//"]').each(function(){
+              var $this = $(this);
+              var _src = $this.attr("src");
+              $this.attr("src", "https:" + _src);
+            });
+
+            $('#randomLeft').css('display','block');
+
+
+            //NO LINKS
+            $('#randomRight').html(rText);
+
+            //remove [edit] links
+            $('.mw-editsection').remove();
+            //fix internal links, by adding wiki proj as prefix
+            //$('a[href^="/wiki"]').css('color', 'red');
+            $('a[href^="/wiki"]').each(function() {
+               var $this = $(this);
+               var _href = $this.attr("href");
+               $this.attr("href", proj + _href);
+            });
+            //fix img src
+            $('img[src^="//"]').each(function(){
+              var $this = $(this);
+              var _src = $this.attr("src");
+              $this.attr("src", "https:" + _src);
+            });
+
+            //remove all links to wiki projects, keeping the text (maybe there is a better parameter to use when choosing which links to remove?)
+            //$('a[href*="wiki"]').css('color', 'red');
+            $('#randomRight a[href*="wiki"]').contents().unwrap();
+
+            $('#randomRight').css('display','block');
+          });
+      });
+
+
+    });
+
+
+
+
+});
+</script>
+</html>
