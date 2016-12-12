@@ -7,8 +7,8 @@
   <style>
   #left, #right{ width: 48%; float: left;}
   #right{margin-left: 4%;}
-  #myFullpage{display: none;}
-  #myFullpageNoLinks{display: none;}
+  #myFullpage,#myFullpageTxt{display: none;}
+  #myFullpageNoLinks,#myFullpageNoLinksTxt{display: none;}
   </style>
 </head>
 <body>
@@ -16,11 +16,15 @@
     <h2 id="myTitle"></h2>
     <div id="myFullpage">
     </div>
+    <div id="myFullpageTxt">
+    </div>
   </div>
 
   <div id="right">
     <h2>Without links</h2>
     <div id="myFullpageNoLinks">
+    </div>
+    <div id="myFullpageNoLinksTxt">
     </div>
   </div>
 
@@ -47,6 +51,7 @@ $(document).ready(function(){
         //Fullpage
         $('#myTitle').text('Wikipedia EN ' +myTitle + ' Fullpage');
         $('#myFullpage').html(text);
+        $('#myFullpageTxt').text(text);
 
         //remove [edit] links
         $('.mw-editsection').remove();
@@ -65,10 +70,11 @@ $(document).ready(function(){
         });
 
         $('#myFullpage').css('display','block');
-
+        $('#myFullpageTxt').css('display','block');
 
         //NO LINKS
         $('#myFullpageNoLinks').html(text);
+        $('#myFullpageNoLinksTxt').text(text);
 
         //remove [edit] links
         $('.mw-editsection').remove();
@@ -91,6 +97,7 @@ $(document).ready(function(){
         $('#myFullpageNoLinks a[href*="wiki"]').contents().unwrap();
 
         $('#myFullpageNoLinks').css('display','block');
+        $('#myFullpageNoLinksTxt').css('display','block');
       });
 
 
