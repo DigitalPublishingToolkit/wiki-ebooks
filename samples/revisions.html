@@ -13,6 +13,9 @@
   <h2 id="myTitleContrib"></h2>
   <ul id="myContributions">
   </ul>
+
+  <hr>
+  <div id="myRevisionsTxt"></div>
 </body>
 <script>
 $(document).ready(function(){
@@ -51,6 +54,9 @@ $(document).ready(function(){
             $('#myContributions').append('<li>'+contribArray[o].name+'</li>');
 
         }
+
+        //Txt
+        $('#myRevisionsTxt').text('<ul>'+$('#myRevisions').html()+'</ul>');
 
       });
 
