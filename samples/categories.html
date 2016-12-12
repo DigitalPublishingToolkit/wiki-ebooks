@@ -9,6 +9,7 @@
   <h2 id="myTitle"></h2>
   <ul id="myCategories">
   </ul>
+  <div id="myCategoriesTxt"></div>
 </body>
 <script>
 $(document).ready(function(){
@@ -39,6 +40,9 @@ var jsonFile = proj+"/w/api.php?action=parse&page="+page+"&prop=categories&forma
         }
 
       }
+
+      //Txt
+      $('#myCategoriesTxt').text('<ul>'+$('#myCategories').html()+'</ul>');
 
     });
 
