@@ -149,6 +149,14 @@ function callJSON(i, j){
         }).get();
         var lJsonCalls = [];
 
+        //check existing content
+        if($('#left').children().length > 0){
+          $('#left').children().remove();
+        }
+        if($('#right').children().length > 0){
+          $('#right').children().remove();
+        }
+
         for(var l = 0; l < lArray.length; l++){
         //  alert(lArray[l]); //fulldomain
 
@@ -158,6 +166,7 @@ function callJSON(i, j){
           extractDomain(lArray[l])
           //console.log(lDomain, lPage, lProj);
           lJsonCalls.push('https://'+lDomain+"/w/api.php?action=parse&page="+lPage+"&format=json&callback=?");
+
           $('#left').append('<div class="json'+ (l + 1) + '"></div>');
           $('#right').append('<div class="json'+ (l + 1) + '"></div>');
           callJSON(l, lJsonCalls[l]);
