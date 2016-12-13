@@ -32,8 +32,8 @@
 <script>
 $(document).ready(function(){
 
-  var proj = "https://en.wikipedia.org";
-  var page = "Etherpad"; //Apache Wave
+  var proj = "https://fr.wikipedia.org";
+  var page = "Habit_de_lumières"; //Apache Wave
 
   //var jsonFile = 'json/fullpage.json';
 
@@ -74,7 +74,7 @@ $(document).ready(function(){
 
         //NO LINKS
         $('#myFullpageNoLinks').html(text);
-        $('#myFullpageNoLinksTxt').text(text);
+        // $('#myFullpageNoLinksTxt').text(text);
 
         //remove [edit] links
         $('.mw-editsection').remove();
@@ -95,6 +95,9 @@ $(document).ready(function(){
         //remove all links to wiki projects, keeping the text (maybe there is a better parameter to use when choosing which links to remove?)
         //$('a[href*="wiki"]').css('color', 'red');
         $('#myFullpageNoLinks a[href*="wiki"]').contents().unwrap();
+        
+        var noLinksText = $('#myFullpageNoLinks').html();
+        $('#myFullpageNoLinksTxt').text(noLinksText);
 
         $('#myFullpageNoLinks').css('display','block');
         $('#myFullpageNoLinksTxt').css('display','block');
