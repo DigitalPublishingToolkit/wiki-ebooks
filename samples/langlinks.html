@@ -158,13 +158,11 @@ function callJSON(i, j){
         }
 
         for(var l = 0; l < lArray.length; l++){
-        //  alert(lArray[l]); //fulldomain
 
           //from fulldomain, get
           //proj (lDomain)
           //pageTitle (lPage)
           extractDomain(lArray[l])
-          //console.log(lDomain, lPage, lProj);
           lJsonCalls.push('https://'+lDomain+"/w/api.php?action=parse&page="+lPage+"&format=json&callback=?");
 
           $('#left').append('<div class="json'+ (l + 1) + '"></div>');
@@ -173,36 +171,9 @@ function callJSON(i, j){
          }
          //console.log(lJsonCalls);
 
-        //  for(c = 0; c < lJsonCalls.length; c++){
-        //    $('body').append('<span id="json'+ (c + 1) + '"></span>');
-        //    callJSON(c);
-        //  }
-
-
       });
-      //to get the page text, we need another API call, like
-      //proj+"/w/api.php?action=parse&page="+linksArray[o]["*"]+"&format=json&callback=?""
-
-      /*
-      $.getJSON(graphicDataUrl)
-          .then(function(data) {
-              // ...worked, put it in #view-graphic
-          })
-          .fail(function() {
-              // ...didn't work, handle it
-          });
-      $.getJSON(webDataUrl, function(data) {
-          .then(function(data) {
-              // ...worked, put it in #view-web
-          })
-          .fail(function() {
-              // ...didn't work, handle it
-          });
-      */
 
     });
-
-
 
 
 });
