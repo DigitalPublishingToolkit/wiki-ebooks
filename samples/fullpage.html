@@ -5,15 +5,17 @@
   <meta charset="utf-8">
   <script src="json/jquery-2.1.3.min.js"></script>
   <style>
+
   #left, #right{ width: 48%; float: left;}
   #right{margin-left: 4%;}
   #myFullpage,#myFullpageTxt{display: none;}
   #myFullpageNoLinks,#myFullpageNoLinksTxt{display: none;}
+
   </style>
 </head>
 <body>
   <div id="left">
-    <h2 id="myTitle"></h2>
+    <!-- <h2 id="myTitle"></h2> -->
     <div id="myFullpage">
     </div>
     <div id="myFullpageTxt">
@@ -21,7 +23,7 @@
   </div>
 
   <div id="right">
-    <h2>Without links</h2>
+    <!-- <h2>Without links</h2> -->
     <div id="myFullpageNoLinks">
     </div>
     <div id="myFullpageNoLinksTxt">
@@ -32,8 +34,8 @@
 <script>
 $(document).ready(function(){
 
-  var proj = "https://fr.wikipedia.org";
-  var page = "Habit_de_lumières"; //Apache Wave
+  var proj = "https://en.wikipedia.org";
+  var page = "Netherlands"; //Apache Wave
 
   //var jsonFile = 'json/fullpage.json';
 
@@ -50,11 +52,29 @@ $(document).ready(function(){
 
         //Fullpage
         $('#myTitle').text('Wikipedia EN ' +myTitle + ' Fullpage');
-        $('#myFullpage').html(text);
-        $('#myFullpageTxt').text(text);
+        $('#myFullpage').html('<h1>'+myTitle+'</h1>'+text);
+        // $('#myFullpageTxt').text(text);
 
         //remove [edit] links
         $('.mw-editsection').remove();
+
+        //remove srcset
+        $('img').removeAttr( "srcset" );
+
+        //unwrap span[lang];
+        $('span[lang]').contents().unwrap();
+
+        //remove .autonumber and .text
+        $('.autonumber').removeClass();
+        $('.text').removeClass();
+
+        //remove .autonumber from the references
+        // $('.autonumber').css('color','orange');
+        // $('.text').css('background-color', 'orange');
+
+        //remove span[title^="ctx"]
+        $('span[title^="ctx"]').remove();
+
         //fix internal links, by adding wiki proj as prefix
         $('a[href^="/wiki"]').css('color', 'red');
         $('a[href^="/wiki"]').each(function() {
@@ -70,10 +90,11 @@ $(document).ready(function(){
         });
 
         $('#myFullpage').css('display','block');
+        $('#myFullpageTxt').text($('#myFullpage').html());
         $('#myFullpageTxt').css('display','block');
 
         //NO LINKS
-        $('#myFullpageNoLinks').html(text);
+        $('#myFullpageNoLinks').html($('#myFullpage').html());
         // $('#myFullpageNoLinksTxt').text(text);
 
         //remove [edit] links
@@ -95,7 +116,7 @@ $(document).ready(function(){
         //remove all links to wiki projects, keeping the text (maybe there is a better parameter to use when choosing which links to remove?)
         //$('a[href*="wiki"]').css('color', 'red');
         $('#myFullpageNoLinks a[href*="wiki"]').contents().unwrap();
-        
+
         var noLinksText = $('#myFullpageNoLinks').html();
         $('#myFullpageNoLinksTxt').text(noLinksText);
 
