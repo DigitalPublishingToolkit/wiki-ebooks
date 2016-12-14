@@ -36,7 +36,8 @@ var jsonFile = proj+"/w/api.php?action=parse&page="+page+"&prop=categories&forma
         if(!( 'hidden' in categArray[o])){
           //console.log(o + ' not hidden');
           //console.log(categArray[o]['*']);
-          $('#myCategories').append('<li><a href="'+proj+'/wiki/Category:'+categArray[o]['*']+'">'+categArray[o]['*']+'</a></li>');
+          // $('#myCategories').append('<li><a href="'+proj+'/wiki/Category:'+categArray[o]['*']+'">'+categArray[o]['*']+'</a></li>');
+          $('#myCategories').append('<li>'+categArray[o]['*']+'</li>');
         }
 
       }
