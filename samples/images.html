@@ -16,12 +16,12 @@
 <script>
 $(document).ready(function(){
 var proj = "https://en.wikipedia.org";
-var page = "Etherpad"; //Apache Wave
+var page = "Bullfighting"; //Apache Wave
 
 //https://commons.wikimedia.org/wiki/Asher_Brown_Durand#/media/File:AsherDurand-Musidora.jpg
 
 //var jsonFile = 'json/images.json';
-var jsonFile = proj+"/w/api.php?action=query&titles="+page+"&prop=images&format=json&callback=?";
+var jsonFile = proj+"/w/api.php?action=query&titles="+page+"&prop=images&imlimit=max&format=json&callback=?";
 
 var iJsonCalls = [];
 
