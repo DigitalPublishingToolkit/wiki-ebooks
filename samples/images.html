@@ -12,6 +12,9 @@
   <h2 id="myTitle"></h2>
   <ul id="myImages">
   </ul>
+  <div class="txt"></div>
+  <ul id="imgFiles">
+  </ul>
 </body>
 <script>
 $(document).ready(function(){
@@ -24,6 +27,7 @@ var page = "Bullfighting"; //Apache Wave
 var jsonFile = proj+"/w/api.php?action=query&titles="+page+"&prop=images&imlimit=max&format=json&callback=?";
 
 var iJsonCalls = [];
+
 
 function callJSON(i, j){
   $.getJSON(j)
@@ -41,10 +45,11 @@ function callJSON(i, j){
           //console.log(myLicense.text);
           //console.log(imgLicense[1]);
 
-          $('body').append('<img src="'+thumbURL+'" >');
-          $('body').append('<p><a href="'+imgLicense[1]+'">'+imgLicense[0]+'</a></p>');
-          $('body').append('<div class="txt"></div>');
-          $('.txt').text('<img src="'+thumbURL+'" ><p><a href="'+imgLicense[1]+'">'+imgLicense[0]+'</a></p>');
+          $('#imgFiles').append('<li><div class="thumbinner"><img src="'+thumbURL+'" alt="Speculator fles &amp; glas.jpg" >');
+          $('#imgFiles').append('<p>'+imgLicense[0]+'</p></div></li>');
+
+          var txtTxt = $('.txt').text();
+          $('.txt').text(txtTxt + '<li><div class="thumbinner"><img src="'+thumbURL+'" ><p>'+imgLicense[0]+'</p></div></li>');
 
       })
       .fail(function() {
@@ -52,6 +57,7 @@ function callJSON(i, j){
           $('.json'+(i+1)).text('ERROR');
       });
 }
+  // console.log('here ' + imgInfo.length);
 
   $.getJSON( jsonFile, function(data) {
       //console.log( "done and assuming that page exists");
@@ -88,8 +94,8 @@ function callJSON(i, j){
         //$('#left').append('<div class="json'+ (l + 1) + '"></div>');
         //$('#right').append('<div class="json'+ (l + 1) + '"></div>');
         callJSON(l, iJsonCalls[l]);
-       }
 
+       }
 
     });
 
