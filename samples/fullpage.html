@@ -34,8 +34,8 @@
 <script>
 $(document).ready(function(){
 
-  var proj = "https://en.wikipedia.org";
-  var page = "Netherlands"; //Apache Wave
+  var proj = "https://es.wikipedia.org";
+  var page = "Etherpad"; //Apache Wave
 
   //var jsonFile = 'json/fullpage.json';
 
@@ -75,6 +75,10 @@ $(document).ready(function(){
         //remove span[title^="ctx"]
         $('span[title^="ctx"]').remove();
 
+        //remove href from red links (non-existing pages)
+        //$('a[href*="redlink=1"]').css('background-color', '#cc0000');
+        $('a[href*="redlink=1"]').removeAttr('href');
+
         //fix internal links, by adding wiki proj as prefix
         $('a[href^="/wiki"]').css('color', 'red');
         $('a[href^="/wiki"]').each(function() {
@@ -89,12 +93,17 @@ $(document).ready(function(){
           $this.attr("src", "https:" + _src);
         });
 
+        //mark external links in content
+        //$('#myFullpage a').not('.references a').css('color','darkgreen');
+
         $('#myFullpage').css('display','block');
         $('#myFullpageTxt').text($('#myFullpage').html());
         $('#myFullpageTxt').css('display','block');
 
         //NO LINKS
         $('#myFullpageNoLinks').html($('#myFullpage').html());
+        //remove external links from content
+        $('#myFullpageNoLinks a').not('.references a').contents().unwrap();
         // $('#myFullpageNoLinksTxt').text(text);
 
         //remove [edit] links
