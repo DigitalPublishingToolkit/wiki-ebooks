@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Images</title>
+  <meta charset="utf-8">
+  <script src="json/jquery-2.1.3.min.js"></script>
+  <style>
+  img{display: block; margin: 1em 0;}
+  </style>
+</head>
+<body>
+  <h2 id="myTitle"></h2>
+  <ul id="myImages">
+  </ul>
+  <div class="txt"></div>
+  <ul id="imgFiles">
+  </ul>
+</body>
+<script>
+$(document).ready(function(){
+var proj = "https://commons.wikimedia.org";
+var page = "File:AsherDurand-Musidora.jpg"; //Asher_Brown_Durand_by_A._Bogardus.jpg
+
+var jsonFile = proj+"/w/api.php?action=query&titles="+page+"&prop=imageinfo&iiprop=url&iiurlwidth=500&meta=siteinfo&siprop=rightsinfo&format=json&callback=?";
+
+  $.getJSON( jsonFile, function(data) {
+      console.log( "done and assuming that page exists");
+      //var pages = data.query.pages;
+
+      //console.log(pages);
+      var myImg = data.query.pages;
+      var myTitle = myImg[Object.keys(myImg)[0]].title;
+      myTitle = myTitle.substr(5);
+      var myLicense = data.query.rightsinfo;
+      var thumbURL = myImg[Object.keys(myImg)[0]].imageinfo[0]["thumburl"];
+      //thumbnail (500px w)
+      //console.log(myImg[Object.keys(myImg)[0]].imageinfo[0]["thumburl"]);
+      //fullimage url
+      //console.log(myImg[Object.keys(myImg)[0]].imageinfo[0]["url"]);
+      //licensing info
+      var imgLicense = [myLicense.text, 'https:'+myLicense.url]
+      //console.log(myLicense.text);
+      //console.log(imgLicense[1]);
+
+      $('#imgFiles').append('<li><div class="thumbinner"><img src="'+thumbURL+'" alt="'+myTitle+'" ><p>'+imgLicense[0]+'</p></div></li>');
+      //$('#imgFiles').append('<p>'+imgLicense[0]+'</p></div></li>');
+
+      var txtTxt = $('.txt').text();
+      $('.txt').text(txtTxt + '<li><div class="thumbinner"><img src="'+thumbURL+'" ><p>'+imgLicense[0]+'</p></div></li>');
+
+    });
+
+
+
+
+});
+</script>
+</html>

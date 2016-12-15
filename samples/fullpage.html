@@ -102,9 +102,11 @@ $(document).ready(function(){
 
         //NO LINKS
         $('#myFullpageNoLinks').html($('#myFullpage').html());
+
+        //external links in content (exclude links inside references)
+        $('#myFullpageNoLinks a').not('.references a').addClass('secret');
         //remove external links from content
-        $('#myFullpageNoLinks a').not('.references a').contents().unwrap();
-        // $('#myFullpageNoLinksTxt').text(text);
+        // $('#myFullpageNoLinks a').not('.references a').contents().unwrap();
 
         //remove [edit] links
         $('.mw-editsection').remove();
