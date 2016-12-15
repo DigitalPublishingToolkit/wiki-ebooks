@@ -65,6 +65,25 @@ var jsonFile = proj+"/w/api.php?action=query&list=random&rnnamespace=0&rnlimit=1
 
             //remove [edit] links
             $('.mw-editsection').remove();
+
+            //remove srcset
+            $('img').removeAttr( "srcset" );
+
+            //unwrap span[lang];
+            $('span[lang]').contents().unwrap();
+
+            //remove .autonumber and .text
+            $('.autonumber').removeClass();
+            $('.text').removeClass();
+
+
+            //remove span[title^="ctx"]
+            $('span[title^="ctx"]').remove();
+
+            //remove href from red links (non-existing pages)
+            //$('a[href*="redlink=1"]').css('background-color', '#cc0000');
+            $('a[href*="redlink=1"]').removeAttr('href');
+
             //fix internal links, by adding wiki proj as prefix
             $('a[href^="/wiki"]').css('color', 'red');
             $('a[href^="/wiki"]').each(function() {

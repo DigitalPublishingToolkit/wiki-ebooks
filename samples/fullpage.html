@@ -11,6 +11,8 @@
   #myFullpage,#myFullpageTxt{display: none;}
   #myFullpageNoLinks,#myFullpageNoLinksTxt{display: none;}
 
+  .secret{background-color: #f00; color: #fff;}
+
   </style>
 </head>
 <body>
@@ -104,9 +106,10 @@ $(document).ready(function(){
         $('#myFullpageNoLinks').html($('#myFullpage').html());
 
         //external links in content (exclude links inside references)
-        $('#myFullpageNoLinks a').not('.references a').addClass('secret');
+        //$('#myFullpageNoLinks a').not('.references a').addClass('secret');
         //remove external links from content
-        // $('#myFullpageNoLinks a').not('.references a').contents().unwrap();
+         //$('#myFullpageNoLinks a').not('.references a').contents().unwrap().addClass('secret');
+         //$('#myFullpageNoLinks a').not('.references a').addClass('secret');
 
         //remove [edit] links
         $('.mw-editsection').remove();

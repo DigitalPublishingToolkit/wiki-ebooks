@@ -64,13 +64,32 @@ function callJSON(i, j){
         // ...all fine
           var myTitle = data.parse.title;
           var text = data.parse.text["*"];
-          $('#left .json'+(i+1)).append('<h2>'+ myTitle + '</h2>');
+          $('#left .json'+(i+1)).append('<h1>'+ myTitle + '</h1>');
           $('#left .json'+(i+1)).append('<div class="myFullpage">'+text+'</div>');
           $('#left .json'+(i+1)).append('<div class="myFullpageTxt"></div>');
           $('#left .json'+(i+1) + ' .myFullpageTxt').text(text);
 
           //remove [edit] links
           $('.mw-editsection').remove();
+
+          //remove srcset
+          $('img').removeAttr( "srcset" );
+
+          //unwrap span[lang];
+          $('span[lang]').contents().unwrap();
+
+          //remove .autonumber and .text
+          $('.autonumber').removeClass();
+          $('.text').removeClass();
+
+
+          //remove span[title^="ctx"]
+          $('span[title^="ctx"]').remove();
+
+          //remove href from red links (non-existing pages)
+          //$('a[href*="redlink=1"]').css('background-color', '#cc0000');
+          $('a[href*="redlink=1"]').removeAttr('href');
+
           //fix internal links, by adding wiki proj as prefix
           $('a[href^="/wiki"]').css('color', 'red');
           $('a[href^="/wiki"]').each(function() {
@@ -86,13 +105,20 @@ function callJSON(i, j){
           });
 
           $('.myFullpage').css('display','block');
+          $('#left .json'+(i+1) + ' .myFullpageTxt').text($('#left .json'+(i+1) + ' .myFullpage').html());
           $('.myFullpageTxt').css('display','block');
 
           //NO LINKS
-          $('#right .json'+(i+1)).append('<h2>'+ myTitle + '</h2>');
-          $('#right .json'+(i+1)).append('<div class="myFullpageNoLinks">'+text+'</div>');
+          $('#right .json'+(i+1)).append('<h1>'+ myTitle + '</h1>');
+          $('#right .json'+(i+1)).append('<div class="myFullpageNoLinks">'+$('#left .json'+(i+1) + ' .myFullpage').html()+'</div>');
           $('#right .json'+(i+1)).append('<div class="myFullpageNoLinksTxt"></div>');
-          $('#right .json'+(i+1) + ' .myFullpageNoLinksTxt').text(text);
+          $('#right .json'+(i+1) + ' .myFullpageNoLinksTxt').text($('#right .json'+(i+1) + ' .myFullpage').html());
+
+          //external links in content (exclude links inside references)
+          //$('.myFullpageNoLinks a').not('.references a').addClass('secret');
+          //remove external links from content
+          // $('#myFullpageNoLinks a').not('.references a').contents().unwrap();
+
 
           //remove [edit] links
           $('.mw-editsection').remove();
@@ -114,8 +140,12 @@ function callJSON(i, j){
           //$('a[href*="wiki"]').css('color', 'red');
           $('.myFullpageNoLinks a[href*="wiki"]').contents().unwrap();
 
-          $('.myFullpageNoLinks').css('display','block');
-          $('.myFullpageNoLinksTxt').css('display','block');
+          var noLinksText = $('#right .json'+(i+1) + ' .myFullpageNoLinks').html();
+          $('#right .json'+(i+1) + ' .myFullpageNoLinksTxt').text(noLinksText);
+
+          $('#right .json'+(i+1) + ' .myFullpageNoLinks').css('display','block');
+          $('#right .json'+(i+1) + ' .myFullpageNoLinksTxt').css('display','block');
+
       })
       .fail(function() {
           // ...didn't work, handle it
