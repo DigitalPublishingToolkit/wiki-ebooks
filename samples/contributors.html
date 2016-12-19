@@ -7,11 +7,13 @@
 </head>
 <body>
   <h2 id="myTitleContrib"></h2>
+  <div id="myContributionsTxt">
+  </div>
+  <h2>Optional content</h2>
   <ul id="myContributions">
   </ul>
 
-  <div id="myContributionsTxt">
-  </div>
+
 </body>
 <script>
 $(document).ready(function(){
@@ -21,7 +23,7 @@ $(document).ready(function(){
 
   //var jsonFile = 'json/contributors.json';
 
-  var jsonFile = proj+"/w/api.php?action=query&titles="+page+"&prop=contributors&format=json&callback=?";
+  var jsonFile = proj+"/w/api.php?action=query&titles="+page+"&prop=contributors&pclimit=max&format=json&callback=?";
 
 
     $.getJSON( jsonFile, function(data) {
@@ -36,14 +38,18 @@ $(document).ready(function(){
         //Contributions
         $('#myTitleContrib').text('Wikipedia EN ' +myTitle + ' Contributions');
 
+        $('#myContributionsTxt').text(contribArray.length + ' users contributed to this page.');
+
+
         for(var o = 0; o < contribArray.length; o++){
-            console.log(contribArray[o].name);
             $('#myContributions').append('<li>'+contribArray[o].name+'</li>');
 
         }
 
+
         //Txt
-         $('#myContributionsTxt').text('<ul>' +$('#myContributions').html()+ '</ul>');
+        //  $('#myContributionsTxt').text('<ul>' +$('#myContributions').html()+ '</ul>');
+      //$('#myContributionsTxt').append('<ul>' +$('#myContributions').html()+ '</ul>');
 
       });
 
