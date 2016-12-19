@@ -68,6 +68,7 @@ $(document).ready(function(){
         //not enough docs on that
         //alternative: run a new action (compare) using revids (two each time)
         // /w/api.php?action=compare&format=json&fromrev=139992&torev=139993
+        //check json file revisions-diff.json
 
         for(var l = 0; l < revisionsArray.length - 1; l++){
           rJsonCalls.push(proj+'/w/api.php?action=compare&format=json&fromrev='+revisionsArray[l].revid+'&torev='+revisionsArray[l+1].revid+'&callback=?')
