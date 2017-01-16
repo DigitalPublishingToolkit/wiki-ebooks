@@ -6,152 +6,170 @@
         <link href="assets/css/reset.css" rel="stylesheet" />
         <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+        <script src="assets/js/jquery-2.1.3.min.js"></script>
     </head>
     <body>
-      <nav id="main">
-        <span id="addcontent" class="current">1.Add Content</span>
-        <span id="editcontent">2.Edit Content</span>
-        <span id="generatefile">3.Generate File</span>
-      </nav>
-        <!-- <h2>Wiki Ebooks</h2> -->
-        <!-- <div id="tool"> -->
-
-          <!-- <div id="wikiLinks">
-            <a href="https://wikipedia.org" target="_blank">Wikipedia</a>
-            <a href="https://wikidata.org" target="_blank">Wikidata</a>
-            <a href="https://commons.wikimedia.org" target="_blank">Wikicommons</a>
-            <a href="https://species.wikimedia.org" target="_blank">Wikispecies</a>
-            <a href="https://wikiquote.org" target="_blank">Wikiquote</a>
-            <a href="https://wikitionary.org" target="_blank">Wikitionary</a>
-            <a href="https://wikivoyage.org" target="_blank">Wikivoyage</a>
-            <a href="https://wikibooks.org" target="_blank">Wikibooks</a>
-          </div> -->
-
-          <div id="mechanism">
-
-          <div id="parameters">
-            <!-- <h3>Project</h3> -->
-            <input type="text" id="w-proj" list="wikiProjects" placeholder="Enter Wiki URL" autofocus >
-
-            <datalist id="wikiProjects">
-              <!-- wikipedia -->
-              <option value="https://de.wikipedia.org/wiki/"  data-project="wikipedia">
-              <option value="https://en.wikipedia.org/wiki/" data-project="wikipedia">
-              <option value="https://es.wikipedia.org/"  data-project="wikipedia">
-              <option value="https://fr.wikipedia.org/"  data-project="wikipedia">
-              <option value="https://it.wikipedia.org/wiki/" data-project="wikipedia">
-              <option value="https://nl.wikipedia.org/wiki/" data-project="wikipedia">
-              <option value="https://pt.wikipedia.org/wiki/" data-project="wikipedia">
-              <!-- wikicommons -->
-              <option value="https://commons.wikimedia.org/wiki/"  data-project="wikimedia">
-              <!-- wiki voyage -->
-              <option value="https://de.wikivoyage.org/wiki/"  data-project="wikivoyage">
-              <option value="https://en.wikivoyage.org/wiki/"  data-project="wikivoyage">
-              <option value="https://es.wikivoyage.org/wiki/"  data-project="wikivoyage">
-              <option value="https://fr.wikivoyage.org/wiki/"  data-project="wikivoyage">
-              <option value="https://it.wikivoyage.org/wiki/"  data-project="wikivoyage">
-              <option value="https://nl.wikivoyage.org/wiki/"  data-project="wikivoyage">
-              <option value="https://pt.wikivoyage.org/wiki/"  data-project="wikivoyage">
-
-              <!-- wikibooks -->
-              <option value="https://de.wikibooks.org/wiki/"  data-project="wikibooks">
-              <option value="https://en.wikibooks.org/wiki/"  data-project="wikibooks">
-              <option value="https://es.wikibooks.org/wiki/"  data-project="wikibooks">
-              <option value="https://fr.wikibooks.org/wiki/"  data-project="wikibooks">
-              <option value="https://it.wikibooks.org/wiki/"  data-project="wikibooks">
-              <option value="https://nl.wikibooks.org/wiki/"  data-project="wikibooks">
-              <option value="https://pt.wikibooks.org/wiki/"  data-project="wikibooks">
-
-            </datalist>
-
+      <div id="wrapper">
+        <nav id="main">
+          <div id="addcontent" class="current">1.Add Content</div>
+          <div id="editcontent">2.Edit Content
+            <ul>
+            </ul>
           </div>
-          <div id="modules">
-            <div class="module wikipedia wikidata wikiquote wiktionary wikivoyage wikibooks" id="fullPage" data-action="parse" data-prop="text" data-info="Retrieves the Full Content">Full page</div>
-            <div class="module wikispecies wikimedia" id="imageInfo" data-action="query" data-prop="imageinfo" >Get Image</div>
-            <!-- <div class="module wikispecies wikimedia" id="allImages" data-action="query" data-prop="images" >Get All Images</div> -->
-            <div class="module wikipedia" id="lastRevisions" data-sub="&rvprop=timestamp|user|comment&rvlimit=10" data-prop="revisions" data-action="query" data-info="Retrieves the latest N revisions">Last 10  Revisions</div>
-            <div class="module wikipedia wikidata wikispecies" id="categories" data-prop="categories" data-action="parse" data-info="Retrieves the list of Categories to which this entry belongs">Categories</div>
-            <div class="module wikipedia wikidata wikiquote wiktionary wikivoyage wikibooks wikimedia" id="random"  data-action="query" data-sub="&rnnamespace=0&rnlimit=1" data-prop="random" data-info="Retrieves Random Randomness">Random</div>
-            <!-- <div class="module wikipedia " id="contributors"  data-action="query" data-info="Retrieves the List of Users that contributed to the entry">Contributors</div> -->
-            <!-- lang links & recommendations -->
-          </div>
-          <div id="msg"></div>
-          <div id="btns">
-            <button id="makeQuery">Request</button>
-            <button class="later">New Content</button> <button class="later">Lorem</button> <button class="later">Ipsum</button>
-          </div>
-        </div> <!-- end mechanism -->
-            <!-- <h3>Page Title</h3>
-            <p>Type the page title (exactly as it appears in the page)</p>
-            <input type="text" id="w-page" placeholder="The page title (Etherpad)" value="Etherpad"> -->
-            <!-- <h3>Action</h3>
-            <p>Choose the action you'd like the query to perform.</p>
-            <select id="w-action">
-             <option value="parse">parse</option>
-             <option value="query">query</option> -->
-             <!-- Different query actions demand different parameters to be sent along with the query. This script is optimized for the parse action. -->
-            <!-- </select> -->
-            <!-- <h3>Properties</h3>
-            <p>Choose which properties you'd like to include.</p> -->
-            <!-- the values displayed here should match the w-action selected above -->
-            <!-- <select id="w-prop" multiple>
-              <option value="text">Text</option>
-              <option value="langlinks">Language Links</option>
-              <option value="categories">Categories</option>
-              <option value="categorieshtml">Categories in html version</option>
-              <option value="links">Links</option>
-              <option value="templates">Templates</option>
-              <option value="externallinks">External links</option>
-              <option value="sections">Sections</option>
-              <option value="revid">Revidion ID</option>
-              <option value="displaytitle">Title of parsed wiki text</option>
-              <option value="iwlinks">Interwiki links</option>
-            </select> -->
-            <!-- retrieved from https://en.wikipedia.org/w/api.php?action=help&modules=parse -->
-            <!-- <select id="w-parse-prop" multiple>
-              <option value="text">Text</option>
-              <option value="langlinks">Language Links</option>
-              <option value="categories">Categories</option>
-              <option value="categorieshtml">Categories in html version</option>
-              <option value="links">Links</option>
-              <option value="templates">Templates</option>
-              <option value="externallinks">External links</option>
-              <option value="sections">Sections</option>
-              <option value="revid">Revision ID</option>
-              <option value="displaytitle">Title of parsed wiki text</option>
-              <option value="iwlinks">Interwiki links</option>
-            </select>
-            <select id="w-query-prop" multiple>
-              <option value="images">Images</option>
-              <option value="contributors">Contributors</option>
-              <option value="references">References</option>
-            </select>
-            <button id="query">Send Query</button>
-          </div>--><!-- #parameters -->
-          <!-- <div id="result">
-          <h3>Result</h3>
-          <p id="string"></p>
-          <pre id="page">Result will be displayed here.</pre>
-          <pre id="interpretation"> the interpretation of JSON </pre>
+          <div id="generatefile">3.Generate File</div>
+          <div id="about"><a href="about.html">About</a></div>
+        </nav>
 
-          </div> -->
-        <!--</div>--><!-- #tool -->
-        <!-- <div id="wikiSrc">
-          <div id="refUrl">URL goes here</div>
-          <div id="wikiLinks">
-            <a data-href="https://wikipedia.org">Wikipedia</a>
-            <a data-href="https://wikidata.org">Wikidata</a>
-            <a data-href="https://commons.wikimedia.org">Wikicommons</a>
-            <a data-href="https://species.wikimedia.org">Wikispecies</a>
-            <a data-href="https://wikiquote.org">Wikiquote</a>
-            <a data-href="https://wikitionary.org">Wikitionary</a>
-            <a data-href="https://wikivoyage.org">Wikivoyage</a>
-            <a data-href="https://wikibooks.org">Wikibooks</a>
-          </div>
-          <iframe name="wiki" id="wiki" src="https://www.wikipedia.org" style="height: 500px; width: 100%;"></iframe> -->
+          <!-- <div id="tool"> -->
+
+            <!-- <div id="wikiLinks">
+              <a href="https://wikipedia.org" target="_blank">Wikipedia</a>
+              <a href="https://wikidata.org" target="_blank">Wikidata</a>
+              <a href="https://commons.wikimedia.org" target="_blank">Wikicommons</a>
+              <a href="https://species.wikimedia.org" target="_blank">Wikispecies</a>
+              <a href="https://wikiquote.org" target="_blank">Wikiquote</a>
+              <a href="https://wikitionary.org" target="_blank">Wikitionary</a>
+              <a href="https://wikivoyage.org" target="_blank">Wikivoyage</a>
+              <a href="https://wikibooks.org" target="_blank">Wikibooks</a>
+            </div> -->
+
+            <div id="mechanism">
+              <h1>Wiki Ebooks</h1>
+
+            <div id="parameters">
+              <!-- <h3>Project</h3> -->
+              <input type="text" id="w-proj" list="wikiProjects" placeholder="Enter Wiki URL" autofocus >
+
+              <datalist id="wikiProjects">
+                <!-- wikipedia -->
+                <option value="https://de.wikipedia.org/wiki/"  data-project="wikipedia">
+                <option value="https://en.wikipedia.org/wiki/" data-project="wikipedia">
+                <option value="https://es.wikipedia.org/"  data-project="wikipedia">
+                <option value="https://fr.wikipedia.org/"  data-project="wikipedia">
+                <option value="https://it.wikipedia.org/wiki/" data-project="wikipedia">
+                <option value="https://nl.wikipedia.org/wiki/" data-project="wikipedia">
+                <option value="https://pt.wikipedia.org/wiki/" data-project="wikipedia">
+                <!-- wikicommons -->
+                <option value="https://commons.wikimedia.org/wiki/"  data-project="wikimedia">
+                <!-- wiki voyage -->
+                <option value="https://de.wikivoyage.org/wiki/"  data-project="wikivoyage">
+                <option value="https://en.wikivoyage.org/wiki/"  data-project="wikivoyage">
+                <option value="https://es.wikivoyage.org/wiki/"  data-project="wikivoyage">
+                <option value="https://fr.wikivoyage.org/wiki/"  data-project="wikivoyage">
+                <option value="https://it.wikivoyage.org/wiki/"  data-project="wikivoyage">
+                <option value="https://nl.wikivoyage.org/wiki/"  data-project="wikivoyage">
+                <option value="https://pt.wikivoyage.org/wiki/"  data-project="wikivoyage">
+
+                <!-- wikibooks -->
+                <option value="https://de.wikibooks.org/wiki/"  data-project="wikibooks">
+                <option value="https://en.wikibooks.org/wiki/"  data-project="wikibooks">
+                <option value="https://es.wikibooks.org/wiki/"  data-project="wikibooks">
+                <option value="https://fr.wikibooks.org/wiki/"  data-project="wikibooks">
+                <option value="https://it.wikibooks.org/wiki/"  data-project="wikibooks">
+                <option value="https://nl.wikibooks.org/wiki/"  data-project="wikibooks">
+                <option value="https://pt.wikibooks.org/wiki/"  data-project="wikibooks">
+
+              </datalist>
+
+            </div>
+            <div id="modules">
+              <div class="module wikipedia wikidata wikiquote wiktionary wikivoyage wikibooks wikimedia" id="fullPage" data-action="parse" data-prop="text" data-info="Retrieves the Full Content">Full page</div>
+              <div class="module wikispecies wikimedia" id="imageInfo" data-sub="&meta=siteinfo&siprop=rightsinfo" data-action="query" data-prop="imageinfo" >Get Image</div>
+              <!-- <div class="module wikispecies wikimedia" id="allImages" data-action="query" data-prop="images" >Get All Images</div> -->
+              <div class="module wikipedia" id="lastRevisions" data-sub="&rvprop=timestamp|user|comment&rvlimit=10" data-prop="revisions" data-action="query" data-info="Retrieves the latest N revisions">Last 10  Revisions</div>
+              <div class="module wikipedia wikidata wikispecies" id="categories" data-prop="categories" data-action="parse" data-info="Retrieves the list of Categories to which this entry belongs">Categories</div>
+              <div class="module wikipedia wikidata wikiquote wiktionary wikivoyage wikibooks wikimedia" id="random"  data-action="query" data-sub="&rnnamespace=0&rnlimit=1" data-prop="random" data-info="Retrieves Random Randomness">Random</div>
+              <!-- <div class="module wikipedia " id="contributors"  data-action="query" data-info="Retrieves the List of Users that contributed to the entry">Contributors</div> -->
+              <!-- lang links & recommendations -->
+            </div>
+            <div id="msg"></div>
+            <div id="btns">
+
+              <div>
+                <button id="makeQuery">Request</button>
+              </div>
+
+              <div>
+                <button class="later" id="btn-editcontent">Edit content</button>
+              </div>
+
+              <div>
+                <button class="later" id="btn-addcontent">Add more content</button>
+              </div>
+
+            </div>
+          </div> <!-- end mechanism -->
+              <!-- <h3>Page Title</h3>
+              <p>Type the page title (exactly as it appears in the page)</p>
+              <input type="text" id="w-page" placeholder="The page title (Etherpad)" value="Etherpad"> -->
+              <!-- <h3>Action</h3>
+              <p>Choose the action you'd like the query to perform.</p>
+              <select id="w-action">
+               <option value="parse">parse</option>
+               <option value="query">query</option> -->
+               <!-- Different query actions demand different parameters to be sent along with the query. This script is optimized for the parse action. -->
+              <!-- </select> -->
+              <!-- <h3>Properties</h3>
+              <p>Choose which properties you'd like to include.</p> -->
+              <!-- the values displayed here should match the w-action selected above -->
+              <!-- <select id="w-prop" multiple>
+                <option value="text">Text</option>
+                <option value="langlinks">Language Links</option>
+                <option value="categories">Categories</option>
+                <option value="categorieshtml">Categories in html version</option>
+                <option value="links">Links</option>
+                <option value="templates">Templates</option>
+                <option value="externallinks">External links</option>
+                <option value="sections">Sections</option>
+                <option value="revid">Revidion ID</option>
+                <option value="displaytitle">Title of parsed wiki text</option>
+                <option value="iwlinks">Interwiki links</option>
+              </select> -->
+              <!-- retrieved from https://en.wikipedia.org/w/api.php?action=help&modules=parse -->
+              <!-- <select id="w-parse-prop" multiple>
+                <option value="text">Text</option>
+                <option value="langlinks">Language Links</option>
+                <option value="categories">Categories</option>
+                <option value="categorieshtml">Categories in html version</option>
+                <option value="links">Links</option>
+                <option value="templates">Templates</option>
+                <option value="externallinks">External links</option>
+                <option value="sections">Sections</option>
+                <option value="revid">Revision ID</option>
+                <option value="displaytitle">Title of parsed wiki text</option>
+                <option value="iwlinks">Interwiki links</option>
+              </select>
+              <select id="w-query-prop" multiple>
+                <option value="images">Images</option>
+                <option value="contributors">Contributors</option>
+                <option value="references">References</option>
+              </select>
+              <button id="query">Send Query</button>
+            </div>--><!-- #parameters -->
+            <!-- <div id="result">
+            <h3>Result</h3>
+            <p id="string"></p>
+            <pre id="page">Result will be displayed here.</pre>
+            <pre id="interpretation"> the interpretation of JSON </pre>
+
+            </div> -->
+          <!--</div>--><!-- #tool -->
+          <!-- <div id="wikiSrc">
+            <div id="refUrl">URL goes here</div>
+            <div id="wikiLinks">
+              <a data-href="https://wikipedia.org">Wikipedia</a>
+              <a data-href="https://wikidata.org">Wikidata</a>
+              <a data-href="https://commons.wikimedia.org">Wikicommons</a>
+              <a data-href="https://species.wikimedia.org">Wikispecies</a>
+              <a data-href="https://wikiquote.org">Wikiquote</a>
+              <a data-href="https://wikitionary.org">Wikitionary</a>
+              <a data-href="https://wikivoyage.org">Wikivoyage</a>
+              <a data-href="https://wikibooks.org">Wikibooks</a>
+            </div>
+            <iframe name="wiki" id="wiki" src="https://www.wikipedia.org" style="height: 500px; width: 100%;"></iframe> -->
+
+          </div><!-- #wrapper-->
           <script src="assets/js/addcontent.js" ></script>
-        </div>
-
     </body>
 </html>

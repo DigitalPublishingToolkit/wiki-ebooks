@@ -1,211 +1,237 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Lang Links</title>
-  <meta charset="utf-8">
-  <script src="json/jquery-2.1.3.min.js"></script>
-  <style>
-  #myLinks{width: 300px; }
-  option{line-height: 2em; padding: .25em; background-color: #000; color: #fff;}
-  /*option:checked{background-color: red}*/
-  button{display: block; margin-top: 2em;}
-  /*span{background-color: #ccc; margin: 0 .25em; padding: 0.25em;}*/
 
-  #left, #right{ width: 48%; float: left;}
-  #right{margin-left: 4%;}
-  .myFullpage,.myFullpageTxt{display: none;}
-  .myFullpageNoLinks,.myFullpageNoLinksTxt{display: none;}
-  </style>
+<head>
+    <title>Lang Links</title>
+    <meta charset="utf-8">
+    <script src="json/jquery-2.1.3.min.js"></script>
+    <style>
+        #myLinks {
+            width: 300px;
+        }
+
+        option {
+            line-height: 2em;
+            padding: .25em;
+            background-color: #000;
+            color: #fff;
+        }
+        /*option:checked{background-color: red}*/
+
+        button {
+            display: block;
+            margin-top: 2em;
+        }
+        /*span{background-color: #ccc; margin: 0 .25em; padding: 0.25em;}*/
+
+        #left,
+        #right {
+            width: 48%;
+            float: left;
+        }
+
+        #right {
+            margin-left: 4%;
+        }
+
+        .myFullpage,
+        .myFullpageTxt {
+            display: none;
+        }
+
+        .myFullpageNoLinks,
+        .myFullpageNoLinksTxt {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
-  <h2 id="myTitle"></h2>
-  <select id="myLinks" multiple>
+    <h2 id="myTitle"></h2>
+    <select id="myLinks" multiple>
   </select>
-  <button>Get Full Page(s)</button>
-  <div id="left"></div>
-  <div id="right"></div>
+    <button>Get Full Page(s)</button>
+    <div id="left"></div>
+    <div id="right"></div>
 </body>
 <script>
-$(document).ready(function(){
+    $(document).ready(function() {
 
-var proj = "https://en.wikipedia.org";
-var page = "Etherpad"; //Apache Wave
-
-
-//var jsonFile = 'json/langlinks.json';
-var jsonFile = proj+"/w/api.php?action=query&titles="+page+"&prop=langlinks&lllimit=max&format=json&callback=?";
+        var proj = "https://en.wikipedia.org";
+        var page = "Etherpad"; //Apache Wave
 
 
-function extractDomain(url) {
-
-    //find & remove protocol (http, ftp, etc.) and get domain
-    if (url.indexOf("://") > -1) {
-        lDomain = url.split('/')[2];
-        lPage = url.split('/')[4];
-        lProj = lDomain.split('.')[1];
-        //console.log('proj ' +proj);
-    }
-    else {
-        lDomain = url.split('/')[0];
-        lPage = url.split('/')[2];
-        lProj = lDomain.split('.')[1];
-        //console.log('proj ' +proj);
-    }
-
-    //find & remove port number
-    lDomain = lDomain.split(':')[0];
-    return [lDomain, lPage, lProj];
-
-}
-
-function callJSON(i, j){
-  $.getJSON(j)
-      .then(function(data) {
-        // ...all fine
-          var myTitle = data.parse.title;
-          var text = data.parse.text["*"];
-          $('#left .json'+(i+1)).append('<h1>'+ myTitle + '</h1>');
-          $('#left .json'+(i+1)).append('<div class="myFullpage">'+text+'</div>');
-          $('#left .json'+(i+1)).append('<div class="myFullpageTxt"></div>');
-          $('#left .json'+(i+1) + ' .myFullpageTxt').text(text);
-
-          //remove [edit] links
-          $('.mw-editsection').remove();
-
-          //remove srcset
-          $('img').removeAttr( "srcset" );
-
-          //unwrap span[lang];
-          $('span[lang]').contents().unwrap();
-
-          //remove .autonumber and .text
-          $('.autonumber').removeClass();
-          $('.text').removeClass();
+        //var jsonFile = 'json/langlinks.json'; //contains a sample query response
+        var jsonFile = proj + "/w/api.php?action=query&titles=" + page + "&prop=langlinks&lllimit=max&format=json&callback=?";
 
 
-          //remove span[title^="ctx"]
-          $('span[title^="ctx"]').remove();
+        function extractDomain(url) {
 
-          //remove href from red links (non-existing pages)
-          //$('a[href*="redlink=1"]').css('background-color', '#cc0000');
-          $('a[href*="redlink=1"]').removeAttr('href');
+            //find & remove protocol (http, ftp, etc.) and get domain
+            if (url.indexOf("://") > -1) {
+                lDomain = url.split('/')[2];
+                lPage = url.split('/')[4];
+                lProj = lDomain.split('.')[1];
+                //console.log('proj ' +proj);
+            } else {
+                lDomain = url.split('/')[0];
+                lPage = url.split('/')[2];
+                lProj = lDomain.split('.')[1];
+                //console.log('proj ' +proj);
+            }
 
-          //fix internal links, by adding wiki proj as prefix
-          $('a[href^="/wiki"]').css('color', 'red');
-          $('a[href^="/wiki"]').each(function() {
-             var $this = $(this);
-             var _href = $this.attr("href");
-             $this.attr("href", proj + _href);
-          });
-          //fix img src
-          $('img[src^="//"]').each(function(){
-            var $this = $(this);
-            var _src = $this.attr("src");
-            $this.attr("src", "https:" + _src);
-          });
+            //find & remove port number
+            lDomain = lDomain.split(':')[0];
+            return [lDomain, lPage, lProj];
 
-          $('.myFullpage').css('display','block');
-          $('#left .json'+(i+1) + ' .myFullpageTxt').text($('#left .json'+(i+1) + ' .myFullpage').html());
-          $('.myFullpageTxt').css('display','block');
-
-          //NO LINKS
-          $('#right .json'+(i+1)).append('<h1>'+ myTitle + '</h1>');
-          $('#right .json'+(i+1)).append('<div class="myFullpageNoLinks">'+$('#left .json'+(i+1) + ' .myFullpage').html()+'</div>');
-          $('#right .json'+(i+1)).append('<div class="myFullpageNoLinksTxt"></div>');
-          $('#right .json'+(i+1) + ' .myFullpageNoLinksTxt').text($('#right .json'+(i+1) + ' .myFullpage').html());
-
-          //external links in content (exclude links inside references)
-          //$('.myFullpageNoLinks a').not('.references a').addClass('secret');
-          //remove external links from content
-          // $('#myFullpageNoLinks a').not('.references a').contents().unwrap();
-
-
-          //remove [edit] links
-          $('.mw-editsection').remove();
-          //fix internal links, by adding wiki proj as prefix
-          //$('a[href^="/wiki"]').css('color', 'red');
-          $('a[href^="/wiki"]').each(function() {
-             var $this = $(this);
-             var _href = $this.attr("href");
-             $this.attr("href", proj + _href);
-          });
-          //fix img src
-          $('img[src^="//"]').each(function(){
-            var $this = $(this);
-            var _src = $this.attr("src");
-            $this.attr("src", "https:" + _src);
-          });
-
-          //remove all links to wiki projects, keeping the text (maybe there is a better parameter to use when choosing which links to remove?)
-          //$('a[href*="wiki"]').css('color', 'red');
-          $('.myFullpageNoLinks a[href*="wiki"]').contents().unwrap();
-
-          var noLinksText = $('#right .json'+(i+1) + ' .myFullpageNoLinks').html();
-          $('#right .json'+(i+1) + ' .myFullpageNoLinksTxt').text(noLinksText);
-
-          $('#right .json'+(i+1) + ' .myFullpageNoLinks').css('display','block');
-          $('#right .json'+(i+1) + ' .myFullpageNoLinksTxt').css('display','block');
-
-      })
-      .fail(function() {
-          // ...didn't work, handle it
-          $('.json'+(i+1)).text('ERROR');
-      });
-}
-
-  $.getJSON( jsonFile, function(data) {
-      //console.log( "done and assuming that page exists");
-      var pages = data.query.pages;
-      //console.log(pages);
-
-      var myTitle = pages[Object.keys(pages)[0]].title;
-      var linksArray = pages[Object.keys(pages)[0]].langlinks;
-
-      //console.log(linksArray.length);
-
-      $('#myTitle').text('Wikipedia ' +myTitle + ' Lang Links');
-
-      for(var o = 0; o < linksArray.length; o++){
-
-          proj = "https://"+linksArray[o]['lang']+".wikipedia.org";
-          //console.log(linksArray[o]['lang']);
-          $('#myLinks').append('<option  value="'+proj+'/wiki/'+linksArray[o]["*"]+'">'+proj+'/wiki/'+linksArray[o]["*"]+'</option>');
-
-      }
-
-      $('button').on('click', function(){
-        var lArray = $("select#myLinks option:selected").map(function() {
-          return $(this).val();
-        }).get();
-        var lJsonCalls = [];
-
-        //check existing content
-        if($('#left').children().length > 0){
-          $('#left').children().remove();
-        }
-        if($('#right').children().length > 0){
-          $('#right').children().remove();
         }
 
-        for(var l = 0; l < lArray.length; l++){
+        function callJSON(i, j) {
+            $.getJSON(j)
+                .then(function(data) {
+                    // success
+                    var myTitle = data.parse.title;
+                    var text = data.parse.text["*"];
+                    $('#left .json' + (i + 1)).append('<h1>' + myTitle + '</h1>');
+                    $('#left .json' + (i + 1)).append('<div class="myFullpage">' + text + '</div>');
+                    $('#left .json' + (i + 1)).append('<div class="myFullpageTxt"></div>');
+                    $('#left .json' + (i + 1) + ' .myFullpageTxt').text(text);
 
-          //from fulldomain, get
-          //proj (lDomain)
-          //pageTitle (lPage)
-          extractDomain(lArray[l])
-          lJsonCalls.push('https://'+lDomain+"/w/api.php?action=parse&page="+lPage+"&format=json&callback=?");
+                    //format fullpage
+                    //remove [edit] links
+                    $('.mw-editsection').remove();
+                    //remove srcset
+                    $('img').removeAttr("srcset");
+                    //unwrap span[lang];
+                    $('span[lang]').contents().unwrap();
+                    //remove .autonumber and .text
+                    $('.autonumber').removeClass();
+                    $('.text').removeClass();
+                    //remove span[title^="ctx"]
+                    $('span[title^="ctx"]').remove();
 
-          $('#left').append('<div class="json'+ (l + 1) + '"></div>');
-          $('#right').append('<div class="json'+ (l + 1) + '"></div>');
-          callJSON(l, lJsonCalls[l]);
-         }
-         //console.log(lJsonCalls);
+                    //remove href from red links (non-existing pages)
+                    //$('a[href*="redlink=1"]').css('background-color', '#cc0000');
+                    $('a[href*="redlink=1"]').removeAttr('href');
 
-      });
+                    //fix internal links, by adding wiki proj as prefix
+                    $('a[href^="/wiki"]').css('color', 'red');
+                    $('a[href^="/wiki"]').each(function() {
+                        var $this = $(this);
+                        var _href = $this.attr("href");
+                        $this.attr("href", proj + _href);
+                    });
+                    //fix img src
+                    $('img[src^="//"]').each(function() {
+                        var $this = $(this);
+                        var _src = $this.attr("src");
+                        $this.attr("src", "https:" + _src);
+                    });
+
+                    $('.myFullpage').css('display', 'block');
+                    $('#left .json' + (i + 1) + ' .myFullpageTxt').text($('#left .json' + (i + 1) + ' .myFullpage').html());
+                    $('.myFullpageTxt').css('display', 'block');
+
+                    //NO LINKS
+                    $('#right .json' + (i + 1)).append('<h1>' + myTitle + '</h1>');
+                    $('#right .json' + (i + 1)).append('<div class="myFullpageNoLinks">' + $('#left .json' + (i + 1) + ' .myFullpage').html() + '</div>');
+                    $('#right .json' + (i + 1)).append('<div class="myFullpageNoLinksTxt"></div>');
+                    $('#right .json' + (i + 1) + ' .myFullpageNoLinksTxt').text($('#right .json' + (i + 1) + ' .myFullpage').html());
+
+                    //external links in content (exclude links inside references)
+                    //$('.myFullpageNoLinks a').not('.references a').addClass('secret');
+                    //remove external links from content
+                    // $('#myFullpageNoLinks a').not('.references a').contents().unwrap();
+
+                    //remove [edit] links
+                    $('.mw-editsection').remove();
+                    //fix internal links, by adding wiki proj as prefix
+                    //$('a[href^="/wiki"]').css('color', 'red');
+                    $('a[href^="/wiki"]').each(function() {
+                        var $this = $(this);
+                        var _href = $this.attr("href");
+                        $this.attr("href", proj + _href);
+                    });
+                    //fix img src
+                    $('img[src^="//"]').each(function() {
+                        var $this = $(this);
+                        var _src = $this.attr("src");
+                        $this.attr("src", "https:" + _src);
+                    });
+
+                    //remove all links to wiki projects, keeping the text (maybe there is a better parameter to use when choosing which links to remove?)
+                    //$('a[href*="wiki"]').css('color', 'red');
+                    $('.myFullpageNoLinks a[href*="wiki"]').contents().unwrap();
+
+                    var noLinksText = $('#right .json' + (i + 1) + ' .myFullpageNoLinks').html();
+                    $('#right .json' + (i + 1) + ' .myFullpageNoLinksTxt').text(noLinksText);
+
+                    $('#right .json' + (i + 1) + ' .myFullpageNoLinks').css('display', 'block');
+                    $('#right .json' + (i + 1) + ' .myFullpageNoLinksTxt').css('display', 'block');
+
+                })
+                .fail(function() {
+                    //didn't work, handle it
+                    $('.json' + (i + 1)).text('ERROR');
+                });
+        }
+
+        $.getJSON(jsonFile, function(data) {
+            //console.log( "done and assuming that page exists");
+            var pages = data.query.pages;
+            //console.log(pages);
+
+            var myTitle = pages[Object.keys(pages)[0]].title;
+            var linksArray = pages[Object.keys(pages)[0]].langlinks;
+
+            //console.log(linksArray.length);
+
+            $('#myTitle').text('Wikipedia ' + myTitle + ' Lang Links');
+
+            for (var o = 0; o < linksArray.length; o++) {
+
+                proj = "https://" + linksArray[o]['lang'] + ".wikipedia.org";
+                //console.log(linksArray[o]['lang']);
+                $('#myLinks').append('<option  value="' + proj + '/wiki/' + linksArray[o]["*"] + '">' + proj + '/wiki/' + linksArray[o]["*"] + '</option>');
+
+            }
+
+            $('button').on('click', function() {
+                var lArray = $("select#myLinks option:selected").map(function() {
+                    return $(this).val();
+                }).get();
+                var lJsonCalls = [];
+
+                //check existing content
+                if ($('#left').children().length > 0) {
+                    $('#left').children().remove();
+                }
+                if ($('#right').children().length > 0) {
+                    $('#right').children().remove();
+                }
+
+                //loop through linksArray and make one json call - fullpage - for each existing link
+                for (var l = 0; l < lArray.length; l++) {
+
+                    //from fulldomain, get
+                    //proj (lDomain)
+                    //pageTitle (lPage)
+                    extractDomain(lArray[l])
+                    lJsonCalls.push('https://' + lDomain + "/w/api.php?action=parse&page=" + lPage + "&format=json&callback=?");
+
+                    $('#left').append('<div class="json' + (l + 1) + '"></div>');
+                    $('#right').append('<div class="json' + (l + 1) + '"></div>');
+                    callJSON(l, lJsonCalls[l]);
+                    //callJSON(l, 'https://' + lDomain + "/w/api.php?action=parse&page=" + lPage + "&format=json&callback=?");
+                }
+                //console.log(lJsonCalls);
+
+            });
+
+        });
+
 
     });
-
-
-});
 </script>
+
 </html>

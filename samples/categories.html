@@ -1,55 +1,56 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Categories</title>
-  <meta charset="utf-8">
-  <script src="json/jquery-2.1.3.min.js"></script>
+    <title>Categories</title>
+    <meta charset="utf-8">
+    <script src="json/jquery-2.1.3.min.js"></script>
 </head>
+
 <body>
-  <h2 id="myTitle"></h2>
-  <ul id="myCategories">
-  </ul>
-  <div id="myCategoriesTxt"></div>
+    <h2 id="myTitle"></h2>
+    <ul id="myCategories">
+    </ul>
+    <div id="myCategoriesTxt"></div>
 </body>
 <script>
-$(document).ready(function(){
-var proj = "https://en.wikipedia.org";
-var page = "Etherpad"; //Apache Wave
+    $(document).ready(function() {
+        var proj = "https://en.wikipedia.org";
+        var page = "Etherpad"; //Apache Wave
 
-//var jsonFile = 'json/categories.json';
-var jsonFile = proj+"/w/api.php?action=parse&page="+page+"&prop=categories&format=json&callback=?";
+        //var jsonFile = 'json/categories.json'; //contains a query response
+        var jsonFile = proj + "/w/api.php?action=parse&page=" + page + "&prop=categories&format=json&callback=?";
 
 
-  $.getJSON( jsonFile, function(data) {
-      //console.log( "done and assuming that page exists");
-      var pages = data;
-      var myTitle = pages[Object.keys(pages)[0]].title;
-      var categArray = pages[Object.keys(pages)[0]].categories;
+        $.getJSON(jsonFile, function(data) {
+            //console.log( "done and assuming that page exists");
+            var pages = data;
+            var myTitle = pages[Object.keys(pages)[0]].title;
+            var categArray = pages[Object.keys(pages)[0]].categories;
 
-      //console.log(categArray.length);
+            //console.log(categArray.length);
 
-      $('#myTitle').text('Wikipedia EN ' +myTitle + ' Categories');
+            $('#myTitle').text('Wikipedia EN ' + myTitle + ' Categories');
 
-      for(var o = 0; o < categArray.length; o++){
+            for (var o = 0; o < categArray.length; o++) {
 
-        //if hidden, ignore
-        if(!( 'hidden' in categArray[o])){
-          //console.log(o + ' not hidden');
-          //console.log(categArray[o]['*']);
-          // $('#myCategories').append('<li><a href="'+proj+'/wiki/Category:'+categArray[o]['*']+'">'+categArray[o]['*']+'</a></li>');
-          $('#myCategories').append('<li>'+categArray[o]['*']+'</li>');
-        }
+                //if hidden, ignore
+                if (!('hidden' in categArray[o])) {
+                    //console.log(o + ' not hidden');
+                    //console.log(categArray[o]['*']);
+                    // $('#myCategories').append('<li><a href="'+proj+'/wiki/Category:'+categArray[o]['*']+'">'+categArray[o]['*']+'</a></li>');
+                    $('#myCategories').append('<li>' + categArray[o]['*'] + '</li>');
+                }
 
-      }
+            }
 
-      //Txt
-      $('#myCategoriesTxt').text('<ul>'+$('#myCategories').html()+'</ul>');
+            //Txt
+            $('#myCategoriesTxt').text('<ul>' + $('#myCategories').html() + '</ul>');
+
+        });
+
 
     });
-
-
-
-
-});
 </script>
+
 </html>
